@@ -5,6 +5,7 @@ const userController = require('../controllers/userController')
 const jwtMiddleware = require('../middlewares/jwtMiddleware')
 const downloadController = require('../controllers/downloadController')
 const saveRecipeController = require('../controllers/saveRecipeController')
+const multerMiddleware = require('../middlewares/multerMiddleware')
 
 const router = new express.Router()
 
@@ -42,6 +43,11 @@ router.get('/recipes-save',jwtMiddleware,saveRecipeController.getRecipeFromColle
 // remove recipe from saved collection
 router.delete('/recipes-save/:id',jwtMiddleware,saveRecipeController.removeRecipeFromCollectionCotroller)
 
+// user download list
+router.get('/user-downloads',jwtMiddleware,downloadController.userDownloadListController)
+
+// user profile update
+router.put('/users/:id',jwtMiddleware, multerMiddleware.single('picture'), userController.userPictureUpdateController)
 
 // ----------role - Admin
 
